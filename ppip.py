@@ -14,7 +14,7 @@ driver_path = "chromedriver.exe"
 service = Service(executable_path=driver_path)
 options = Options()
 options.add_argument('--headless')
-driver = webdriver.Chrome(service=service)
+driver = webdriver.Chrome(service=service, options=options)
 Title = "PPIP(Kenya) Tenders"
 
 system_keyword = ['SIFMIS', 'IFMIS', 'HARDWARE', "I.C.T", "ENTERPRISE", 'GIFMIS', "consultancy", 'GFS', 'HRMIS', 'PFM',
@@ -69,14 +69,15 @@ def get_filtered_table_data(page, keywords, page_no: int = None, url: str = None
                         EC.element_to_be_clickable((By.XPATH, '//div[@class="v-list-item-title"]'))
                     )
                     tender_info.click()
-                    time.sleep(3)
+                    time.sleep(5)
                     link = WebDriverWait(driver, timeout=5).until(
                         EC.presence_of_element_located((By.XPATH,
                                                         '//div[@class="v-card-text d-flex flex-column"]//span[@class="my-2 text-body-1"]//a'))
                     )
-                    time.sleep(3)
+                    time.sleep(5)
                     print(link.text)
                     row_data["link"] = link.text
+                    row_data["page"] = page_no
                     back_button = WebDriverWait(driver, timeout=5).until(
                         EC.element_to_be_clickable((By.XPATH,
                                                     '//button[@class="v-btn v-btn--elevated v-btn--icon v-theme--lightTheme bg-warning v-btn--density-default v-btn--size-small v-btn--variant-elevated"]'))
@@ -85,7 +86,8 @@ def get_filtered_table_data(page, keywords, page_no: int = None, url: str = None
                     time.sleep(5)
                 except Exception as e:
                     print(f"Error handling button or modal: {e}")
-                    row_data["link"] = f"{url} on page {page_no}"
+                    row_data["link"] = url
+                    row_data["page"] = page_no
         except StaleElementReferenceException:
             print("Stale element encountered; retrying row processing.")
             continue
@@ -108,7 +110,7 @@ def scrape_data(url):
             for i in range(2, 9):
                 next_button = pagination_list.find_element(By.XPATH, f'.//div[text()="{i}"]')
                 next_button.click()
-                time.sleep(1)
+                time.sleep(5)
                 print(f"Clicked page {i}")
                 page_data = get_filtered_table_data(page, system_keyword, page_no=i, url=url)
                 all_filtered_records.extend(page_data)

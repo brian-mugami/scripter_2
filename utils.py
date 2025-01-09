@@ -13,7 +13,7 @@ sender_password = os.environ.get("PASSWORD")
 
 def format_results_as_html(records, title):
     html_content = f"<h3>{title} Search Results {datetime.datetime.now().date()}</h3><table border='1' cellpadding='5' cellspacing='0'>"
-    html_content += "<tr><th>Tender No</th><th>Description</th><th>Procuring Entity</th><th>Proc. Method</th><th>Proc. Category</th><th>Publish Date</th><th>Close Date</th><th>Link</th></tr>"
+    html_content += "<tr><th>Tender No</th><th>Description</th><th>Procuring Entity</th><th>Proc. Method</th><th>Proc. Category</th><th>Publish Date</th><th>Close Date</th><th>Page(when you click the link)</th><th>Link</th></tr>"
     for record in records:
         html_content += f"<tr>" \
                         f"<td>{record['Tender. No']}</td>" \
@@ -23,6 +23,7 @@ def format_results_as_html(records, title):
                         f"<td>{record['Proc. Category']}</td>" \
                         f"<td>{record['Publish Date']}</td>" \
                         f"<td>{record['Close Date']}</td>" \
+                        f"<td>{record['page']}</td>" \
                         f"<td><a href='{record['link']}'>View Tender</a></td>" \
                         f"</tr>"
     html_content += "</table>"
