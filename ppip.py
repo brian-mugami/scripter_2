@@ -9,6 +9,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
+from utils import system_keyword
+
 load_dotenv()
 driver_path = "chromedriver.exe"
 service = Service(executable_path=driver_path)
@@ -16,13 +18,6 @@ options = Options()
 options.add_argument('--headless')
 driver = webdriver.Chrome(service=service, options=options)
 Title = "PPIP(Kenya) Tenders"
-
-system_keyword = ['SIFMIS', 'IFMIS', 'HARDWARE', "I.C.T", "ENTERPRISE", 'GIFMIS', "consultancy", 'GFS', 'HRMIS', 'PFM',
-                  'Public Financial Management', 'Quality Assurance', 'Capacity Building Project',
-                  'Capacity Injection Project', 'Enterprise Resource Planning', 'ERP', 'Business Intelligence',
-                  'Public Sector Reform', 'Budget Management System', 'Audit Management Information System',
-                  'Accountable Governance', 'oracle', 'database', 'server', "backup", "datacenter", "datacentre",
-                  "data center", "data centre", 'software', 'servers', 'back up', "I.C.T", "website", "system"]
 
 
 def get_page(url: str, timeout: int, x_path: str):

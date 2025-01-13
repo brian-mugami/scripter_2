@@ -45,3 +45,11 @@ def send_email(subject, body, recipients):
         print("Email sent successfully!")
     except Exception as e:
         print(f"Failed to send email: {e}")
+
+
+system_keyword = ['SIFMIS', 'IFMIS', 'HARDWARE', "I.C.T", "ENTERPRISE", 'GIFMIS', "consultancy", 'GFS', 'HRMIS', 'PFM',
+                  'Public Financial Management', 'Quality Assurance', 'Capacity Building Project',
+                  'Capacity Injection Project', 'Enterprise Resource Planning', 'ERP', 'Business Intelligence',
+                  'Public Sector Reform', 'Budget Management System', 'Audit Management Information System',
+                  'Accountable Governance', 'oracle', 'database', 'server', "backup", "datacenter", "datacentre",
+                  "data center", "data centre", 'software', 'servers', 'back up', "I.C.T", "website", "system","data"]

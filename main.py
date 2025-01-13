@@ -7,7 +7,7 @@ if __name__ == "__main__":
         try:
             html_content = format_results_as_html(content, title="PPIP")
             send_email(subject="PPIP Tenders", body=html_content,
-                       recipients=["brianmugz1@gmail.com", "themugamis@gmail.com"])
+                       recipients=["brianmugz1@gmail.com", "themugamis@gmail.com",])
         except Exception as e:
             print("Exception caused failure:", str(e))
     else:
