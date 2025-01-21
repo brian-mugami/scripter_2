@@ -9,7 +9,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
-from utils import system_keyword
+from utils import system_keyword, get_page
 
 load_dotenv()
 driver_path = "chromedriver.exe"
@@ -17,19 +17,10 @@ service = Service(executable_path=driver_path)
 options = Options()
 options.add_argument('--headless')
 driver = webdriver.Chrome(service=service, options=options)
-Title = "PPIP(Kenya) Tenders"
+title = "PPIP(Kenya) Tenders"
+ppip_url = "https://tenders.go.ke/tenders"
 
-
-def get_page(url: str, timeout: int, x_path: str):
-    driver.get(url)
-    try:
-        first_page = WebDriverWait(driver, timeout=timeout).until(EC.presence_of_element_located(
-            (By.XPATH, x_path)
-        ))
-        return first_page
-    except Exception as e:
-        print(str(e))
-        return None
+print("Kenya Running")
 
 
 def get_filtered_table_data(page, keywords, page_no: int = None, url: str = None):
@@ -73,6 +64,7 @@ def get_filtered_table_data(page, keywords, page_no: int = None, url: str = None
                     print(link.text)
                     row_data["link"] = link.text
                     row_data["page"] = page_no
+                    row_data["title"] = title
                     back_button = WebDriverWait(driver, timeout=5).until(
                         EC.element_to_be_clickable((By.XPATH,
                                                     '//button[@class="v-btn v-btn--elevated v-btn--icon v-theme--lightTheme bg-warning v-btn--density-default v-btn--size-small v-btn--variant-elevated"]'))
@@ -94,7 +86,7 @@ def get_filtered_table_data(page, keywords, page_no: int = None, url: str = None
 
 def scrape_data(url):
     all_filtered_records = []
-    page = get_page(url=url, x_path="//table", timeout=40)
+    page = get_page(url=url, x_path="//table", timeout=40, driver=driver)
     if page:
         filtered_data = get_filtered_table_data(page, system_keyword, page_no=1, url=url)
         all_filtered_records.extend(filtered_data)
@@ -102,7 +94,7 @@ def scrape_data(url):
             pagination_list = WebDriverWait(driver, timeout=10).until(
                 EC.presence_of_element_located((By.XPATH, '//ul[@class="v-pagination__list"]'))
             )
-            for i in range(2, 9):
+            for i in range(2, 30):
                 next_button = pagination_list.find_element(By.XPATH, f'.//div[text()="{i}"]')
                 next_button.click()
                 time.sleep(5)
@@ -122,8 +114,8 @@ def scrape_data(url):
     return all_filtered_records
 
 
-def ppip_scraper(url):
+def ppip_scraper():
     try:
-        return scrape_data(url)
+        return scrape_data(ppip_url)
     finally:
         driver.quit()

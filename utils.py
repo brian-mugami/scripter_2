@@ -1,9 +1,12 @@
-import datetime
+from datetime import datetime
 import os
 import smtplib
 from email.message import EmailMessage
 
 from dotenv import load_dotenv
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.wait import WebDriverWait
 
 load_dotenv()
 
@@ -11,21 +14,39 @@ sender_email = os.environ.get("EMAIL")
 sender_password = os.environ.get("PASSWORD")
 
 
-def format_results_as_html(records, title):
-    html_content = f"<h3>{title} Search Results {datetime.datetime.now().date()}</h3><table border='1' cellpadding='5' cellspacing='0'>"
-    html_content += "<tr><th>Tender No</th><th>Description</th><th>Procuring Entity</th><th>Proc. Method</th><th>Proc. Category</th><th>Publish Date</th><th>Close Date</th><th>Page(when you click the link)</th><th>Link</th></tr>"
+def get_page(url: str, timeout: int, x_path: str, driver):
+    driver.get(url)
+    try:
+        first_page = WebDriverWait(driver, timeout=timeout).until(EC.presence_of_element_located(
+            (By.XPATH, x_path)
+        ))
+        return first_page
+    except Exception as e:
+        print(str(e))
+        return None
+
+
+def format_results_as_html(records):
+    if not records:
+        return f"<h3>No Search Results Found</h3><p>No results available.</p>"
+    title = records[0].get('title', 'Search Results')
+    headers = [key for key in records[0].keys() if key != 'title']
+    html_content = f"<h3>{title} Search Results {datetime.now().date()}</h3>"
+    html_content += "<table border='1' cellpadding='5' cellspacing='0'>"
+    html_content += "<tr>"
+    for header in headers:
+        html_content += f"<th>{header}</th>"
+    html_content += "</tr>"
     for record in records:
-        html_content += f"<tr>" \
-                        f"<td>{record['Tender. No']}</td>" \
-                        f"<td>{record['Description']}</td>" \
-                        f"<td>{record['Procuring_Entity']}</td>" \
-                        f"<td>{record['Proc. Method']}</td>" \
-                        f"<td>{record['Proc. Category']}</td>" \
-                        f"<td>{record['Publish Date']}</td>" \
-                        f"<td>{record['Close Date']}</td>" \
-                        f"<td>{record['page']}</td>" \
-                        f"<td><a href='{record['link']}'>View Tender</a></td>" \
-                        f"</tr>"
+        html_content += "<tr>"
+        for key in headers:
+            value = record[key]
+            if key.lower() == 'link':
+                html_content += f"<td><a href='{value}'>View Tender</a></td>"
+            else:
+                html_content += f"<td>{value}</td>"
+        html_content += "</tr>"
+
     html_content += "</table>"
     return html_content
 
@@ -52,4 +73,4 @@ system_keyword = ['SIFMIS', 'IFMIS', 'HARDWARE', "I.C.T", "ENTERPRISE", 'GIFMIS'
                   'Capacity Injection Project', 'Enterprise Resource Planning', 'ERP', 'Business Intelligence',
                   'Public Sector Reform', 'Budget Management System', 'Audit Management Information System',
                   'Accountable Governance', 'oracle', 'database', 'server', "backup", "datacenter", "datacentre",
-                  "data center", "data centre", 'software', 'servers', 'back up', "I.C.T", "website", "system","data"]
+                  "data center", "data centre", 'software', 'servers', 'back up', "I.C.T", "website", "system", "data"]
