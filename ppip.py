@@ -20,8 +20,6 @@ driver = webdriver.Chrome(service=service, options=options)
 title = "PPIP(Kenya) Tenders"
 ppip_url = "https://tenders.go.ke/tenders"
 
-print("Kenya Running")
-
 
 def get_filtered_table_data(page, keywords, page_no: int = None, url: str = None):
     headers = []

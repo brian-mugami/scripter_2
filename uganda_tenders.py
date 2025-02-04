@@ -19,7 +19,6 @@ ug_url = "https://gpp.ppda.go.ug/public/bid-invitations"
 ug_xpath = '//div[@class="ng-star-inserted"]'
 ug_timeout = 40
 
-print("UG Running")
 
 def get_filtered_data(keywords, page, url: str = None):
     data_list = []
@@ -49,7 +48,8 @@ def get_filtered_data(keywords, page, url: str = None):
             })
     except Exception as e:
         print("Error extracting data for an element:", str(e))
-    print(data_list)
+    for record in data_list:
+        print(record)
     return data_list
 
 

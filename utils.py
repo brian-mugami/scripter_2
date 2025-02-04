@@ -1,6 +1,6 @@
-from datetime import datetime
 import os
 import smtplib
+from datetime import datetime
 from email.message import EmailMessage
 
 from dotenv import load_dotenv
@@ -68,9 +68,10 @@ def send_email(subject, body, recipients):
         print(f"Failed to send email: {e}")
 
 
-system_keyword = ['SIFMIS', 'IFMIS', 'HARDWARE', "I.C.T", "ENTERPRISE", 'GIFMIS', "consultancy", 'GFS', 'HRMIS', 'PFM',
-                  'Public Financial Management', 'Quality Assurance', 'Capacity Building Project',
-                  'Capacity Injection Project', 'Enterprise Resource Planning', 'ERP', 'Business Intelligence',
-                  'Public Sector Reform', 'Budget Management System', 'Audit Management Information System',
-                  'Accountable Governance', 'oracle', 'database', 'server', "backup", "datacenter", "datacentre",
-                  "data center", "data centre", 'software', 'servers', 'back up', "I.C.T", "website", "system", "data"]
+system_keyword = ['SIFMIS', 'IFMIS', "I.C.T", "ENTERPRISE", 'GIFMIS', 'GFS', 'HRMIS', 'PFM', "HRMS",
+                  "information system", "management system", "human resource", 'Public Financial Management',
+                  'Quality Assurance', 'Capacity Building Project', 'Capacity Injection Project',
+                  'Enterprise Resource Planning', 'ERP', 'Business Intelligence', 'Public Sector Reform',
+                  'Budget Management System', 'Audit Management Information System', 'Accountable Governance', 'oracle',
+                  'database', 'server', "backup", "datacenter", "datacentre", "data center", "data centre", 'software',
+                  'servers', 'back up', "I.C.T", "website", "data"]
