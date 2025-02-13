@@ -75,3 +75,13 @@ system_keyword = ['SIFMIS', 'IFMIS', "I.C.T", "ENTERPRISE", 'GIFMIS', 'GFS', 'HR
                   'Budget Management System', 'Audit Management Information System', 'Accountable Governance', 'oracle',
                   'database', 'server', "backup", "datacenter", "datacentre", "data center", "data centre", 'software',
                   'servers', 'back up', "I.C.T", "website", "data"]
+
+african_countries = [
+    "Algeria", "Angola", "Benin", "Botswana", "Burkina Faso", "Burundi", "Cabo Verde", "Cameroon",
+    "Central African Republic", "Chad", "Comoros", "Congo", "Cote d'Ivoire", "Djibouti", "Egypt",
+    "Equatorial Guinea", "Eritrea", "Eswatini", "Ethiopia", "Gabon", "Gambia", "Ghana", "Guinea",
+    "Guinea-Bissau", "Kenya", "Lesotho", "Liberia", "Libya", "Madagascar", "Malawi", "Mali", "Mauritania",
+    "Mauritius", "Morocco", "Mozambique", "Namibia", "Niger", "Nigeria", "Rwanda", "Sao Tome and Principe",
+    "Senegal", "Seychelles", "Sierra Leone", "Somalia", "South Africa", "South Sudan", "Sudan", "Tanzania",
+    "Togo", "Tunisia", "Uganda", "Zambia", "Zimbabwe"
+]

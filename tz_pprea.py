@@ -95,7 +95,6 @@ def scrape_data(url, timeout):
 
 def tz_scrapper():
     try:
-        data = scrape_data(tz_url, tz_timeout)
-        return data
+        return scrape_data(tz_url, tz_timeout)
     finally:
         driver.quit()

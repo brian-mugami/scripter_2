@@ -92,7 +92,7 @@ def scrape_data(url):
             pagination_list = WebDriverWait(driver, timeout=10).until(
                 EC.presence_of_element_located((By.XPATH, '//ul[@class="v-pagination__list"]'))
             )
-            for i in range(2, 30):
+            for i in range(2, 62):
                 next_button = pagination_list.find_element(By.XPATH, f'.//div[text()="{i}"]')
                 next_button.click()
                 time.sleep(5)

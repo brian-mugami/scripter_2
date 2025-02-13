@@ -6,11 +6,17 @@ from ppip import ppip_scraper
 from tz_pprea import tz_scrapper
 from uganda_tenders import ug_scraper
 from utils import format_results_as_html, send_email
-
+from world_bank import wb_scrape
 load_dotenv()
 
 error_email_1 = os.environ.get("ERROR_EMAIL_1")
 email_1 = os.environ.get("RECEIPT_EMAIL_1")
+email_2 = os.environ.get("RECEIPT_EMAIL_2")
+email_3 = os.environ.get("RECEIPT_EMAIL_3")
+email_4 = os.environ.get("RECEIPT_EMAIL_4")
+email_5 = os.environ.get("RECEIPT_EMAIL_5")
+
+all = [email_5, email_4, email_2, email_3, email_1]
 
 
 def main():
@@ -37,6 +43,13 @@ def main():
             email_content += f"<h2>Uganda Tenders</h2>{ug_html}<br>"
     except Exception as e:
         errors.append(f"Uganda scraper failed: {str(e)}")
+    try:
+        wb_results = wb_scrape()
+        if wb_results:
+            wb_html = format_results_as_html(wb_results)
+            email_content += f"<h2>World Bank Tenders</h2>{wb_html}<br>"
+    except Exception as e:
+        errors.append(f"World Bank scraper failed: {str(e)}")
     if errors:
         error_message = "<br>".join(errors)
         send_email(
@@ -61,7 +74,7 @@ def main():
     else:
         send_email(
             subject="No Tenders Found",
-            body="No tenders matching your search were found for today.",
+            body="No tenders matching your search were found for today1.",
             recipients=[email_1]
         )
 
