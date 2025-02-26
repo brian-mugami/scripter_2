@@ -2,11 +2,13 @@ import os
 
 from dotenv import load_dotenv
 
+from ethiopia_egp import egp_scraper
 from ppip import ppip_scraper
 from tz_pprea import tz_scrapper
 from uganda_tenders import ug_scraper
 from utils import format_results_as_html, send_email
 from world_bank import wb_scrape
+
 load_dotenv()
 
 error_email_1 = os.environ.get("ERROR_EMAIL_1")
@@ -22,6 +24,13 @@ all = [email_5, email_4, email_2, email_3, email_1]
 def main():
     errors = []
     email_content = ""
+    try:
+        eg_results = egp_scraper()
+        if eg_results:
+            eg_html = format_results_as_html(eg_results)
+            email_content += f"<h2>Ethiopia Tenders</h2>{eg_html}<br>"
+    except Exception as e:
+        errors.append(f"Ethiopia scraper failed: {str(e)}")
     try:
         tz_results = tz_scrapper()
         if tz_results:
@@ -63,7 +72,7 @@ def main():
             send_email(
                 subject="Combined Tenders Results",
                 body=email_content,
-                recipients=[email_1]
+                recipients=all
             )
         except Exception as e:
             send_email(
@@ -75,7 +84,7 @@ def main():
         send_email(
             subject="No Tenders Found",
             body="No tenders matching your search were found for today1.",
-            recipients=[email_1]
+            recipients=all
         )
 
 

@@ -17,7 +17,7 @@ load_dotenv()
 driver_path = "chromedriver.exe"
 service = Service(executable_path=driver_path)
 options = Options()
-# options.add_argument('--headless')
+options.add_argument('--headless')
 driver = webdriver.Chrome(service=service, options=options)
 Title = "World Bank Tenders"
 wb_url = "https://projects.worldbank.org/en/projects-operations/procurement?srce=both"
@@ -36,9 +36,6 @@ def get_filtered_table_data(pages, keywords, page_no: int = None, url: str = Non
         for row in rows:
             try:
                 each_column = row.find_elements(by=By.TAG_NAME, value="td")
-                if len(each_column) < 6:
-                    continue
-
                 original_text = each_column[0].text
                 language = detect(original_text) if original_text else "en"
 
