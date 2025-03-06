@@ -1,7 +1,9 @@
+import logging
 import os
 
 from dotenv import load_dotenv
 
+from erp_tenders import erp_scraper
 from ethiopia_egp import egp_scraper
 from ppip import ppip_scraper
 from tz_pprea import tz_scrapper
@@ -19,11 +21,26 @@ email_4 = os.environ.get("RECEIPT_EMAIL_4")
 email_5 = os.environ.get("RECEIPT_EMAIL_5")
 
 all = [email_5, email_4, email_2, email_3, email_1]
+logging.basicConfig(
+    filename="scraper_errors.log",
+    level=logging.ERROR,
+    format="%(asctime)s - %(levelname)s - %(message)s"
+)
 
 
 def main():
     errors = []
     email_content = ""
+    try:
+        erp_results = erp_scraper()
+        if erp_results:
+            erp_html = format_results_as_html(erp_results)
+            email_content += f"<h2>ERP Tenders Africa</h2>{erp_html}<br>"
+    except Exception as e:
+        errors.append(f"ERP Africa scraper failed: {str(e)}")
+        error_msg = f"ERP Africa scraper failed: {str(e)}"
+        logging.error(error_msg)
+        errors.append(error_msg)
     try:
         eg_results = egp_scraper()
         if eg_results:
@@ -31,6 +48,9 @@ def main():
             email_content += f"<h2>Ethiopia Tenders</h2>{eg_html}<br>"
     except Exception as e:
         errors.append(f"Ethiopia scraper failed: {str(e)}")
+        error_msg = f"Ethiopia scraper failed: {str(e)}"
+        logging.error(error_msg)
+        errors.append(error_msg)
     try:
         tz_results = tz_scrapper()
         if tz_results:
@@ -38,13 +58,19 @@ def main():
             email_content += f"<h2>TZ Tenders</h2>{tz_html}<br>"
     except Exception as e:
         errors.append(f"Tz scraper failed: {str(e)}")
+        error_msg = f"Tz scraper failed: {str(e)}"
+        logging.error(error_msg)
+        errors.append(error_msg)
     try:
         ppip_results = ppip_scraper()
         if ppip_results:
             ppip_html = format_results_as_html(ppip_results)
             email_content += f"<h2>PPIP Tenders</h2>{ppip_html}<br>"
     except Exception as e:
-        errors.append(f"PPIP scraper failed: {str(e)}")
+        errors.append(f"Kenya PPIP scraper failed: {str(e)}")
+        error_msg = f"Kenya PPIP scraper failed: {str(e)}"
+        logging.error(error_msg)
+        errors.append(error_msg)
     try:
         ug_results = ug_scraper()
         if ug_results:
@@ -52,6 +78,9 @@ def main():
             email_content += f"<h2>Uganda Tenders</h2>{ug_html}<br>"
     except Exception as e:
         errors.append(f"Uganda scraper failed: {str(e)}")
+        error_msg = f"Uganda scraper failed: {str(e)}"
+        logging.error(error_msg)
+        errors.append(error_msg)
     try:
         wb_results = wb_scrape()
         if wb_results:
@@ -59,6 +88,9 @@ def main():
             email_content += f"<h2>World Bank Tenders</h2>{wb_html}<br>"
     except Exception as e:
         errors.append(f"World Bank scraper failed: {str(e)}")
+        error_msg = f"World Bank scraper failed: {str(e)}"
+        logging.error(error_msg)
+        errors.append(error_msg)
     if errors:
         error_message = "<br>".join(errors)
         send_email(
@@ -72,7 +104,7 @@ def main():
             send_email(
                 subject="Combined Tenders Results",
                 body=email_content,
-                recipients=all
+                recipients=[email_1]
             )
         except Exception as e:
             send_email(
@@ -83,8 +115,8 @@ def main():
     else:
         send_email(
             subject="No Tenders Found",
-            body="No tenders matching your search were found for today1.",
-            recipients=all
+            body="No tenders matching your search were found for today.",
+            recipients=[email_1]
         )
 
 

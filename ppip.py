@@ -8,12 +8,11 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
-
+from webdriver_manager.chrome import ChromeDriverManager
 from utils import system_keyword, get_page
 
 load_dotenv()
-driver_path = "chromedriver.exe"
-service = Service(executable_path=driver_path)
+service = Service(ChromeDriverManager().install())
 options = Options()
 options.add_argument('--headless')
 driver = webdriver.Chrome(service=service, options=options)
@@ -23,19 +22,19 @@ ppip_url = "https://tenders.go.ke/tenders"
 
 def get_filtered_table_data(page, keywords, page_no: int = None, url: str = None):
     headers = []
-    headers_text = WebDriverWait(driver, timeout=15).until(
+    headers_text = WebDriverWait(driver, timeout=20).until(
         EC.presence_of_all_elements_located((By.XPATH, '//tr[@class="text-caption font-weight-bold"]//th'))
     )
     for header_text in headers_text:
         headers.append(header_text.text)
 
     filtered_table_data = []
-    rows = WebDriverWait(page, timeout=10).until(
+    rows = WebDriverWait(page, timeout=20).until(
         EC.presence_of_all_elements_located((By.XPATH, '//tbody//tr'))
     )
     for row in rows:
         try:
-            elements = WebDriverWait(row, timeout=10).until(
+            elements = WebDriverWait(row, timeout=20).until(
                 EC.presence_of_all_elements_located((By.XPATH, ".//td"))
             )
             row_data = {}
@@ -89,7 +88,7 @@ def scrape_data(url):
         filtered_data = get_filtered_table_data(page, system_keyword, page_no=1, url=url)
         all_filtered_records.extend(filtered_data)
         try:
-            pagination_list = WebDriverWait(driver, timeout=10).until(
+            pagination_list = WebDriverWait(driver, timeout=40).until(
                 EC.presence_of_element_located((By.XPATH, '//ul[@class="v-pagination__list"]'))
             )
             for i in range(2, 62):

@@ -8,12 +8,11 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
-
+from webdriver_manager.chrome import ChromeDriverManager
 from utils import system_keyword
 
 load_dotenv()
-driver_path = "chromedriver.exe"
-service = Service(executable_path=driver_path)
+service = Service(ChromeDriverManager().install())
 options = Options()
 options.add_argument('--headless')
 driver = webdriver.Chrome(service=service, options=options)

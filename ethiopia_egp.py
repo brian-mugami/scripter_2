@@ -2,18 +2,19 @@ import time
 
 from dotenv import load_dotenv
 from selenium import webdriver
+from selenium.common import StaleElementReferenceException
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
+from webdriver_manager.chrome import ChromeDriverManager
 
 from language_utils import translate_to_english, detect_language
 from utils import system_keyword
 
 load_dotenv()
-driver_path = "chromedriver.exe"
-service = Service(executable_path=driver_path)
+service = Service(ChromeDriverManager().install())
 options = Options()
 Title = "Ethiopia Tenders"
 options.add_argument('--headless')
@@ -34,32 +35,39 @@ def get_table_data(title, page, keywords):
         rows = table.find_elements(By.XPATH, ".//tr")
 
         for row in rows:
-            row_elements = row.find_elements(By.XPATH, ".//td")
-            original_text = row_elements[2].text
-            language = detect_language(original_text)
+            try:
+                row_elements = row.find_elements(By.XPATH, ".//td")
+                original_text = row_elements[2].text
+                language = detect_language(original_text)
 
-            trans_text = (
-                translate_to_english(original_text)
-                if language != "en" and len(original_text) > 3
-                else original_text
-            )
-            if keywords and not any(keyword in trans_text.lower() for keyword in keywords):
-                continue
-            row_data = {
-                "ref_no": row_elements[0].text,
-                "lot_no": row_elements[1].text,
-                "procuring_title": row_elements[2].text,
-                "procuring_title_translated": trans_text,
-                "procuring_entity": row_elements[3].text,
-                "Procurement_category": row_elements[4].text,
-                "Market_approach": row_elements[5].text,
-                "Source": row_elements[6].text,
-                "title": title,
-                "page": page,
-                "link": driver.current_url,
-                "Submission_Deadline": row_elements[7].text,
-            }
-            data_list.append(row_data)
+                trans_text = (
+                    translate_to_english(original_text)
+                    if language != "en" and len(original_text) > 3
+                    else original_text
+                )
+                if keywords and not any(keyword in trans_text.lower() for keyword in keywords):
+                    continue
+                row_data = {
+                    "ref_no": row_elements[0].text,
+                    "lot_no": row_elements[1].text,
+                    "procuring_title": row_elements[2].text,
+                    "procuring_title_translated": trans_text,
+                    "procuring_entity": row_elements[3].text,
+                    "Procurement_category": row_elements[4].text,
+                    "Market_approach": row_elements[5].text,
+                    "Source": row_elements[6].text,
+                    "title": title,
+                    "page": page,
+                    "link": driver.current_url,
+                    "Submission_Deadline": row_elements[7].text,
+                }
+                data_list.append(row_data)
+            except StaleElementReferenceException:
+                print("Stale element encountered in ERP Tender Scrapper; skipping row.")
+            except IndexError:
+                print("Skipping row due to missing columns ERP Tender Scrapper.")
+            except Exception as e:
+                print(f"Error processing row ERP Tender Scrapper: {e}")
 
     except Exception as e:
         print(f"Error retrieving table data on page {page}: {e}")

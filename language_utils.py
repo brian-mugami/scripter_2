@@ -6,7 +6,7 @@ DetectorFactory.seed = 0
 
 
 def detect_language(in_text):
-    text = in_text.strip()  # Remove leading/trailing spaces
+    text = in_text.strip()
     try:
         return detect(text)
     except Exception as e:

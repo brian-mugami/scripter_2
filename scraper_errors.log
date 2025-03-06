@@ -1,0 +1,29 @@
+2025-03-06 09:50:26,275 - ERROR - Kenya PPIP scraper failed: Message: 
+
+2025-03-06 10:25:39,932 - ERROR - PPIP Tenders scraper failed: Message: 
+
+2025-03-06 10:25:42,198 - ERROR - World Bank Tenders scraper failed: Message: 
+Stacktrace:
+	GetHandleVerifier [0x00A40B43+25139]
+	(No symbol) [0x009D13F4]
+	(No symbol) [0x008B04E3]
+	(No symbol) [0x008F83D7]
+	(No symbol) [0x008F872B]
+	(No symbol) [0x00941002]
+	(No symbol) [0x0091D014]
+	(No symbol) [0x0093E778]
+	(No symbol) [0x0091CDC6]
+	(No symbol) [0x008EBDE9]
+	(No symbol) [0x008ED124]
+	GetHandleVerifier [0x00D44373+3185251]
+	GetHandleVerifier [0x00D6291A+3309578]
+	GetHandleVerifier [0x00D5CF42+3286578]
+	GetHandleVerifier [0x00AD7AE0+643536]
+	(No symbol) [0x009DA20D]
+	(No symbol) [0x009D70B8]
+	(No symbol) [0x009D7257]
+	(No symbol) [0x009C9E00]
+	BaseThreadInitThunk [0x75B85D49+25]
+	RtlInitializeExceptionChain [0x777ACDEB+107]
+	RtlGetAppContainerNamedObjectPath [0x777ACD71+561]
+
