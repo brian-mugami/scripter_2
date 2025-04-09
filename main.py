@@ -62,16 +62,6 @@ def main():
         logging.error(error_msg)
         errors.append(error_msg)
     try:
-        ppip_results = ppip_scraper()
-        if ppip_results:
-            ppip_html = format_results_as_html(ppip_results)
-            email_content += f"<h2>PPIP Tenders</h2>{ppip_html}<br>"
-    except Exception as e:
-        errors.append(f"Kenya PPIP scraper failed: {str(e)}")
-        error_msg = f"Kenya PPIP scraper failed: {str(e)}"
-        logging.error(error_msg)
-        errors.append(error_msg)
-    try:
         ug_results = ug_scraper()
         if ug_results:
             ug_html = format_results_as_html(ug_results)
@@ -91,6 +81,16 @@ def main():
         error_msg = f"World Bank scraper failed: {str(e)}"
         logging.error(error_msg)
         errors.append(error_msg)
+    try:
+        ppip_results = ppip_scraper()
+        if ppip_results:
+            ppip_html = format_results_as_html(ppip_results)
+            email_content += f"<h2>PPIP Tenders</h2>{ppip_html}<br>"
+    except Exception as e:
+        errors.append(f"Kenya PPIP scraper failed: {str(e)}")
+        error_msg = f"Kenya PPIP scraper failed: {str(e)}"
+        logging.error(error_msg)
+        errors.append(error_msg)
     if errors:
         error_message = "<br>".join(errors)
         send_email(
@@ -104,7 +104,7 @@ def main():
             send_email(
                 subject="Combined Tenders Results",
                 body=email_content,
-                recipients=[email_1]
+                recipients=all
             )
         except Exception as e:
             send_email(
@@ -116,7 +116,7 @@ def main():
         send_email(
             subject="No Tenders Found",
             body="No tenders matching your search were found for today.",
-            recipients=[email_1]
+            recipients=all
         )
 
 

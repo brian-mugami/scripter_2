@@ -6,12 +6,15 @@ from dotenv import load_dotenv
 
 from erp_tenders import erp_scraper
 from ethiopia_egp import egp_scraper
+from nigeria_ebid import ng_ebid_scrapper
+from nigeria_etenders import ng_etenders_scrapper
+from nigeria_tenders import ng_procurement_scrapper
 from ppip import ppip_scraper
 from tz_pprea import tz_scrapper
 from uganda_tenders import ug_scraper
 from utils import format_results_as_html, send_email
 from world_bank import wb_scrape
-
+from rwanda_ucwa import scrape_rwanda_data
 load_dotenv()
 
 error_email_1 = os.environ.get("ERROR_EMAIL_1")
@@ -39,6 +42,10 @@ def main():
         "PPIP Tenders": ppip_scraper,
         "Uganda Tenders": ug_scraper,
         "World Bank Tenders": wb_scrape,
+        "Rwanda Tenders": scrape_rwanda_data,
+        "Nigeria e-Bid":ng_ebid_scrapper,
+        "Nigeria e-Tenders":ng_etenders_scrapper,
+        "Nigeria Procurement":ng_procurement_scrapper
     }
     results = {}
     with ThreadPoolExecutor() as executor:
@@ -68,7 +75,7 @@ def main():
         send_email(
             subject="Combined Tenders Results",
             body=email_content,
-            recipients=all
+            recipients=[email_1]
         )
     else:
         send_email(
