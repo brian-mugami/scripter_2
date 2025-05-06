@@ -1,3 +1,5 @@
 .env
 /chc
 __pycache__
+/scraper_errors.log
+/chromedriver.exe

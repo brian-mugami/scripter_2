@@ -73,9 +73,9 @@ def main():
 
     if email_content:
         send_email(
-            subject="Combined Tenders Results",
+            subject="Combined Tenders Results(E.Africa, Nigeria, World Bank)",
             body=email_content,
-            recipients=[email_1]
+            recipients=all
         )
     else:
         send_email(
