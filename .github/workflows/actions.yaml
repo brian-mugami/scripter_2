@@ -28,6 +28,10 @@ jobs:
           PASSWORD: ${{ secrets.PASSWORD }}
           ERROR_EMAIL_1: ${{ secrets.ERROR_EMAIL_1 }}
           RECEIPT_EMAIL_1: ${{ secrets.RECEIPT_EMAIL_1 }}
+          RECEIPT_EMAIL_2: ${{ secrets.RECEIPT_EMAIL_2 }}
+          RECEIPT_EMAIL_3: ${{ secrets.RECEIPT_EMAIL_3 }}
+          RECEIPT_EMAIL_4: ${{ secrets.RECEIPT_EMAIL_4 }}
+          RECEIPT_EMAIL_5: ${{ secrets.RECEIPT_EMAIL_5 }}
         run: python main_2.py
 
       - name: commit files
