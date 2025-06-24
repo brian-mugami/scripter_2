@@ -40,7 +40,7 @@ def main():
         "Ethiopia Tenders": egp_scraper,
         "TZ Tenders": tz_scrapper,
         "PPIP Tenders": ppip_scraper,
-        "Uganda Tenders": ug_scraper,
+        #"Uganda Tenders": ug_scraper,
         "World Bank Tenders": wb_scrape,
         "Rwanda Tenders": scrape_rwanda_data,
         "Nigeria e-Bid":ng_ebid_scrapper,
@@ -66,7 +66,7 @@ def main():
 
     if errors:
         send_email(
-            subject="Tender Scraper Errors",
+            subject="Tender Scraper Errors", 
             body=f"<h3>The following errors occurred during scraping:</h3><p>{'<br>'.join(errors)}</p>",
             recipients=[error_email_1]
         )
@@ -75,7 +75,7 @@ def main():
         send_email(
             subject="Combined Tenders Results(E.Africa, Nigeria, World Bank)",
             body=email_content,
-            recipients=[email_1]
+            recipients=all
         )
     else:
         send_email(

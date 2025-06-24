@@ -40,7 +40,7 @@ def format_results_as_html(records):
     for record in records:
         html_content += "<tr>"
         for key in headers:
-            value = record[key]
+            value = record.get(key)
             if key.lower() == 'link':
                 html_content += f"<td><a href='{value}'>View Tender</a></td>"
             else:
@@ -74,7 +74,7 @@ system_keyword = ['SIFMIS', 'IFMIS', "I.C.T", "ENTERPRISE", 'GIFMIS', 'GFS', 'HR
                   'Enterprise Resource Planning', 'ERP', 'Business Intelligence', 'Public Sector Reform',
                   'Budget Management System', 'Audit Management Information System', 'Accountable Governance', 'oracle',
                   'database', 'server', "backup", "datacenter", "datacentre", "data center", "data centre", 'software',
-                  'servers', 'back up', "I.C.T", "website", "data"]
+                  'servers', 'back up', "I.C.T", "website", "data", "bank"]
 
 african_countries = [
     "Algeria", "Angola", "Benin", "Botswana", "Burkina Faso", "Burundi", "Cabo Verde", "Cameroon",
