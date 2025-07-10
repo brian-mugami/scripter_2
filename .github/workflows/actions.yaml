@@ -32,6 +32,7 @@ jobs:
           RECEIPT_EMAIL_3: ${{ secrets.RECEIPT_EMAIL_3 }}
           RECEIPT_EMAIL_4: ${{ secrets.RECEIPT_EMAIL_4 }}
           RECEIPT_EMAIL_5: ${{ secrets.RECEIPT_EMAIL_5 }}
+          RECEIPT_EMAIL_6: ${{ secrets.RECEIPT_EMAIL_6 }}
         run: python main_2.py
 
       - name: commit files
