@@ -15,7 +15,7 @@ from tz_pprea import tz_scrapper
 from uganda_tenders import ug_scraper
 from utils import format_results_as_html, send_email
 from world_bank import wb_scrape
-
+from afdb_tenders import afdb_scrape
 load_dotenv()
 
 error_email_1 = os.environ.get("ERROR_EMAIL_1")
@@ -26,7 +26,7 @@ email_4 = os.environ.get("RECEIPT_EMAIL_4")
 email_5 = os.environ.get("RECEIPT_EMAIL_5")
 email_6 = os.environ.get("RECEIPT_EMAIL_6")
 
-all = [email_5, email_4, email_2, email_3, email_1, email_6]
+all = [email_1,email_6,email_5,email_2,email_3,email_4,email_5]
 logging.basicConfig(
     filename="scraper_errors.log",
     level=logging.ERROR,
@@ -42,12 +42,13 @@ def main():
         "Ethiopia Tenders": egp_scraper,
         "TZ Tenders": tz_scrapper,
         "PPIP Tenders": ppip_scraper,
-        "Uganda Tenders": ug_scraper,
         "World Bank Tenders": wb_scrape,
         "Rwanda Tenders": scrape_rwanda_data,
         "Nigeria e-Bid": ng_ebid_scrapper,
         "Nigeria e-Tenders": ng_etenders_scrapper,
-        "Nigeria Procurement": ng_procurement_scrapper
+        "Nigeria Procurement": ng_procurement_scrapper,
+        "Uganda Tenders": ug_scraper,
+        "AFDB Tenders":afdb_scrape
     }
     results = {}
     with ThreadPoolExecutor() as executor:

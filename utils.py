@@ -74,7 +74,7 @@ system_keyword = ['SIFMIS', 'IFMIS', "I.C.T", "ENTERPRISE", 'GIFMIS', 'GFS', 'HR
                   'Enterprise Resource Planning', 'ERP', 'Business Intelligence', 'Public Sector Reform',
                   'Budget Management System', 'Audit Management Information System', 'Accountable Governance', 'oracle',
                   'database', 'server', "backup", "datacenter", "datacentre", "data center", "data centre", 'software',
-                  'servers', 'back up', "I.C.T", "website", "data", "bank"]
+                  'servers', 'back up', "I.C.T", "website", "data", "bank", "technical", "Temenos", "Quality","system", "penetration testing"]
 
 african_countries = [
     "Algeria", "Angola", "Benin", "Botswana", "Burkina Faso", "Burundi", "Cabo Verde", "Cameroon",

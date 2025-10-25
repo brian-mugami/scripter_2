@@ -84,6 +84,7 @@ def scrape_data(url):
     table = WebDriverWait(driver, 30).until(
         EC.presence_of_element_located((By.XPATH, '//table'))
     )
+    time.sleep(5)
     data = get_filtered_table_data(table, system_keyword, page_no=1, url=wb_url)
     filtered_data.extend(data)
     buttons = btn.find_elements(By.XPATH, "./li/a")[2:-2]
