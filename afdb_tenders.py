@@ -19,19 +19,22 @@ load_dotenv()
 service = Service(ChromeDriverManager().install())
 options = Options()
 Title = "AFDB Tenders"
-options.add_argument('--headless')
+options.add_argument("--headless=new")          # <- use the new headless mode
+options.add_argument("--window-size=1920,1080") # <- ensures layout & visibility
+options.add_argument("--disable-dev-shm-usage") # CI/containers
+options.add_argument("--no-sandbox")
+options.add_argument("--lang=en-US")
+# (optional) slightly more “human” UA to avoid headless-specific content
+options.add_argument("--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+                     "(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36")
 driver = webdriver.Chrome(service=service, options=options)
 url = "https://www.afdb.org/en/projects-and-operations/procurement"
-timeout = 30
+timeout = 40
 driver.get(url)
-wait = WebDriverWait(driver, 15)
-
-initial = WebDriverWait(driver, timeout).until(
-    EC.presence_of_element_located((By.XPATH, '//div[@class="views-bootstrap-grid-plugin-style"]'))
-)
+wait = WebDriverWait(driver, 40)
 
 RESULTS_LOCATOR = (By.XPATH, '//div[@class="views-bootstrap-grid-plugin-style"]')
-PAGELOAD_TIMEOUT = 15
+PAGELOAD_TIMEOUT = 40
 
 
 def wait_ready():
@@ -141,3 +144,4 @@ def afdb_scrape():
         return scrape_data()
     finally:
         driver.quit()
+
