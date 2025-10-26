@@ -62,6 +62,7 @@ def get_filtered_table_data(container, keywords_lc, page_no: int, url: str):
                 except Exception:
                     language = "en"
 
+
                 trans_text = translate_to_english(text) if (language and language != "en") else text
 
                 if any(kw in trans_text.lower() for kw in keywords_lc):

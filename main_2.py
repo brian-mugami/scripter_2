@@ -4,6 +4,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 
 from dotenv import load_dotenv
 
+from au_tenders import au_scrape
 from erp_tenders import erp_scraper
 from ethiopia_egp import egp_scraper
 from nigeria_ebid import ng_ebid_scrapper
@@ -48,7 +49,8 @@ def main():
         "Nigeria e-Tenders": ng_etenders_scrapper,
         "Nigeria Procurement": ng_procurement_scrapper,
         "Uganda Tenders": ug_scraper,
-        "AFDB Tenders":afdb_scrape
+        "AFDB Tenders":afdb_scrape,
+        "AU Tenders": au_scrape
     }
     results = {}
     with ThreadPoolExecutor() as executor:

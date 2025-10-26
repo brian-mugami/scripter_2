@@ -1467,3 +1467,29 @@ Stacktrace:
 	RtlInitializeExceptionChain [0x0x7722d6db+107]
 	RtlGetAppContainerNamedObjectPath [0x0x7722d661+561]
 
+2025-10-25 14:24:31,552 - ERROR - Nigeria e-Tenders scraper failed: Message: 
+Stacktrace:
+	GetHandleVerifier [0x0xaefe43+66515]
+	GetHandleVerifier [0x0xaefe84+66580]
+	(No symbol) [0x0x8ddc48]
+	(No symbol) [0x0x928704]
+	(No symbol) [0x0x928aab]
+	(No symbol) [0x0x96f482]
+	(No symbol) [0x0x94b214]
+	(No symbol) [0x0x96cba7]
+	(No symbol) [0x0x94afc6]
+	(No symbol) [0x0x91c2ca]
+	(No symbol) [0x0x91d154]
+	GetHandleVerifier [0x0xd47353+2521315]
+	GetHandleVerifier [0x0xd422d3+2500707]
+	GetHandleVerifier [0x0xb17c94+229924]
+	GetHandleVerifier [0x0xb081f8+165768]
+	GetHandleVerifier [0x0xb0ecad+193085]
+	GetHandleVerifier [0x0xaf8158+100072]
+	GetHandleVerifier [0x0xaf82f0+100480]
+	GetHandleVerifier [0x0xae25aa+11066]
+	BaseThreadInitThunk [0x0x76a75d49+25]
+	RtlInitializeExceptionChain [0x0x7722d6db+107]
+	RtlGetAppContainerNamedObjectPath [0x0x7722d661+561]
+
+2025-10-25 14:29:01,199 - ERROR - Uganda Tenders scraper failed: HTTPConnectionPool(host='localhost', port=50233): Read timed out. (read timeout=120)
