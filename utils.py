@@ -51,18 +51,21 @@ def format_results_as_html(records):
     return html_content
 
 
-def send_email(subject, body, recipients):
+def send_email(subject, body, recipients, bcc_recipients=None):
     msg = EmailMessage()
     msg["From"] = sender_email
     msg["Subject"] = subject
     msg["To"] = ", ".join(recipients)
+    if bcc_recipients:
+        msg["Bcc"] = ", ".join(bcc_recipients)
     msg.set_content("This email contains HTML content. Please enable HTML view.")
     msg.add_alternative(body, subtype="html")
+    all_recipients = recipients + (bcc_recipients or [])
     try:
         with smtplib.SMTP("smtp.gmail.com", 587) as smtp:
             smtp.starttls()
             smtp.login(sender_email, sender_password)
-            smtp.sendmail(sender_email, recipients, msg.as_string())
+            smtp.sendmail(sender_email, all_recipients, msg.as_string())
         print("Email sent successfully!")
     except Exception as e:
         print(f"Failed to send email: {e}")

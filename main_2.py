@@ -25,9 +25,11 @@ email_2 = os.environ.get("RECEIPT_EMAIL_2")
 email_3 = os.environ.get("RECEIPT_EMAIL_3")
 email_4 = os.environ.get("RECEIPT_EMAIL_4")
 email_5 = os.environ.get("RECEIPT_EMAIL_5")
-email_6 = os.environ.get("RECEIPT_EMAIL_6")
+bcc_email_1 = os.environ.get("BCC_EMAIL_1")
 
-all = [email_1,email_6,email_5,email_2,email_3,email_4,email_5]
+all = [email_1,email_2,email_3,email_4,email_5]
+bcc = [bcc_email_1,]
+
 logging.basicConfig(
     filename="scraper_errors.log",
     level=logging.ERROR,
@@ -73,14 +75,15 @@ def main():
         send_email(
             subject="Tender Scraper Errors",
             body=f"<h3>The following errors occurred during scraping:</h3><p>{'<br>'.join(errors)}</p>",
-            recipients=[error_email_1]
+            recipients=[error_email_1],
         )
 
     if email_content:
         send_email(
             subject="Combined Tenders Results(E.Africa, Nigeria, World Bank)",
             body=email_content,
-            recipients=all
+            recipients=all,
+            bcc_recipients=bcc
         )
     else:
         send_email(
